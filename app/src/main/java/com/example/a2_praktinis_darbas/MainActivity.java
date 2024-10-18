@@ -17,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
 
     private EditText edUserInput;
     private TextView tvResult;
+    private Spinner spCountOptions;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,19 +30,22 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
 
-        EditText edUserInput = findViewById(R.id.edUserInput);
-        TextView tvResult = findViewById(R.id.tvResult);
-        Spinner spinner = findViewById(R.id.spCountOptions);
+        this.edUserInput = findViewById(R.id.edUserInput);
+        this.tvResult = findViewById(R.id.tvResult);
+
+        this.spCountOptions = findViewById(R.id.spCountOptions);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
                 R.array.counting_options,
                 android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
+        spCountOptions.setAdapter(adapter);
     }
 
     public void onBtnCountClick(View view) {
-
+        String userInputPhrase = this.edUserInput.getText().toString();
+        int result = TextCounter.getCharsCount(userInputPhrase);
+        this.tvResult.setText(String.valueOf(result));
     }
 }
