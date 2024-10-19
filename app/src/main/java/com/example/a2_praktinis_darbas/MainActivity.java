@@ -44,8 +44,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnCountClick(View view) {
-        String userInputPhrase = this.edUserInput.getText().toString();
-        int result = TextCounter.getCharsCount(userInputPhrase);
-        this.tvResult.setText(String.valueOf(result));
+        if (this.spCountOptions.getSelectedItem().toString().equals(getString(R.string.chars_options))) {
+            String userInputPhrase = this.edUserInput.getText().toString();
+            int result = TextCounter.getCharsCount(userInputPhrase);
+            this.tvResult.setText(String.valueOf(result));
+        }
+        else {
+            this.tvResult.setText(R.string.message_not_implemented);
+        }
     }
 }

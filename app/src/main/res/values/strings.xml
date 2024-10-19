@@ -1,7 +1,10 @@
 <resources>
     <string name="app_name">2_Praktinis_Darbas</string>
-    <string name="words">Words</string>
-    <string name="count">Count</string>
+    <string name="user_input_words">Write Text Here</string>
+    <string name="button_count">Count</string>
+    <string name="greeting_text">Hello World!</string>
+    <string name="message_not_implemented">Not Implemented!</string>
+    <string name="chars_options">Chars</string>
     <string-array name="counting_options">
         <item>Chars</item>
         <item>Words</item>
