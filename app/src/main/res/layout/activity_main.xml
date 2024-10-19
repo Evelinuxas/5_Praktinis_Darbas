@@ -27,8 +27,8 @@
         android:text="@string/user_input_words"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="LabelFor,MissingConstraints"
-        tools:layout_editor_absoluteY="48dp" />
+        app:layout_constraintTop_toBottomOf="@+id/tvResult"
+        tools:ignore="LabelFor" />
 
     <Button
         android:id="@+id/btnCalculate"
@@ -38,14 +38,13 @@
         android:onClick="onBtnCountClick"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spCountOptions"
-        tools:ignore="MissingConstraints" />
+        app:layout_constraintTop_toBottomOf="@+id/spCountOptions" />
 
     <Spinner
         android:id="@+id/spCountOptions"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         app:layout_constraintTop_toBottomOf="@+id/edUserInput"
-        tools:layout_editor_absoluteX="1dp" />
-
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

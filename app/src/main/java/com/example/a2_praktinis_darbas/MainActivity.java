@@ -6,12 +6,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,13 +19,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
         this.edUserInput = findViewById(R.id.edUserInput);
         this.tvResult = findViewById(R.id.tvResult);
@@ -36,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
         this.spCountOptions = findViewById(R.id.spCountOptions);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
                 this,
-                R.array.counting_options,
+                R.array.counting_options,  // Naudojame string-array išteklių
                 android.R.layout.simple_spinner_item
         );
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -44,13 +35,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onBtnCountClick(View view) {
-        if (this.spCountOptions.getSelectedItem().toString().equals(getString(R.string.chars_options))) {
-            String userInputPhrase = this.edUserInput.getText().toString();
-            int result = TextCounter.getCharsCount(userInputPhrase);
-            this.tvResult.setText(String.valueOf(result));
+        String userInputPhrase = this.edUserInput.getText().toString().trim();
+
+        // Tikriname, ar įvesties laukas tuščias
+        if (userInputPhrase.isEmpty()) {
+            Toast.makeText(this, getString(R.string.empty_input_message), Toast.LENGTH_SHORT).show(); // Naudojame pranešimą iš strings.xml
+            return; // Išeiname iš funkcijos, jei laukas tuščias
         }
-        else {
+
+        // Tikriname pasirinkimą iš Spinner
+        String selectedOption = this.spCountOptions.getSelectedItem().toString();
+        if (selectedOption.equals(getString(R.string.chars_options))) {
+            // Skaičiuojame simbolius
+            int result = TextCounter.getCharsCount(userInputPhrase);
+            this.tvResult.setText(String.valueOf(result)); // Rodo simbolių skaičių
+        } else if (selectedOption.equals(getString(R.string.words_options))) {
+            // Skaičiuojame žodžius
+            int result = TextCounter.getWordsCount(userInputPhrase);
+            this.tvResult.setText(String.valueOf(result)); // Rodo žodžių skaičių
+        } else {
+            // Atsarginis pranešimas
             this.tvResult.setText(R.string.message_not_implemented);
         }
     }
 }
+
